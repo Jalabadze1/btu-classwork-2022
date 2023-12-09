@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -27,6 +28,7 @@ Route::get('/search', function () {
 
 Route::prefix("admin")->name("admin")->group(function() {
     Route::get("", function () {
-        return view('admin.index');
+        $news = DB::table('news')->orderBy('updated_date')->limit(6)->get();
+        return view('admin.index', ['news' => $news]);
     });
 });
